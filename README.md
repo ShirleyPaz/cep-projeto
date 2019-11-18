@@ -20,7 +20,7 @@ npm install
 ```
 Executar o comando abaixo para executar a aplicação.
 ```bash
-npm install
+npm start
 ```
 
 Para executar os testes e2e, executar o comando abaixo:
@@ -36,7 +36,7 @@ npm install
 ```
 Executar o comando abaixo para executar a aplicação. Será aberta a URL http://localhost:4000/
 ```bash
-npm install
+npm start
 ```
 Para executar os testes unitários, executar o comando abaixo:
 ```bash

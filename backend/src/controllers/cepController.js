@@ -7,7 +7,7 @@ exports.getCep = async (req, res) => {
     await cepService.getCepService(cep).then(res => {
       addressInfo = res;
     });
-    if(addressInfo.status === 406) {
+    if(addressInfo.status > 200) {
       res.status(406).send({message: addressInfo.message});
     }
     res.status(addressInfo.status).send(addressInfo.message);

@@ -3,7 +3,7 @@ const request = require("request");
 exports.getCepService = cep => {
   const url = `https://viacep.com.br/ws/${cep}/json/`;
 
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     request(url, (err, res, body) => {
       // erro ao realizar a chamada
       if (err) {
@@ -33,7 +33,6 @@ exports.getCepService = cep => {
         status: res.statusCode,
         message: { cep, logradouro, localidade, uf }
       });
-
     });
   });
 };

@@ -22,5 +22,5 @@ test("return a valid address", async () => {
   fireEvent.submit(form);
 
   await waitForElement(() => queryByTestId("cep-value"));
-  expect(queryByTestId("cep-value").childNodes[0]).toMatch(validCepRes);
+  expect(queryByTestId("cep-value").childNodes[0].textContent).toMatch(validCepRes);
 });

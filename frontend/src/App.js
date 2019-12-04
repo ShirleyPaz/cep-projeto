@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import MaskedInput from "react-text-mask";
+import axios from "axios";
 import "./App.css";
 
 const App = () => {
@@ -7,20 +8,18 @@ const App = () => {
   const [address, setAddress] = useState();
   const [query, setQuery] = useState("");
 
+  const url = `http://localhost:4000/consulta/${query}`;
   const getAddress = useCallback(async () => {
     if (query) {
-      const response = await fetch(`http://localhost:4000/consulta/${query}`)
-        .then(res => {
-          if (res.status > 200) {
-            alert("CEP inválido ou não encontrado");
-          }
-          return res.clone().json();
-        })
-        .catch(err => alert("Erro na chamada, por favor tente mais tarde."));
-
-      if (response.cep) setAddress(response);
+      try {
+        const response = await axios.get(url);
+        setAddress(response.data);
+      } catch (error) {
+        alert(error.response.data.message);
+        setAddress(null);
+      }
     }
-  }, [query]);
+  }, [query, url]);
 
   useEffect(() => {
     getAddress();
@@ -30,14 +29,20 @@ const App = () => {
     setCep(event.target.value);
   };
 
+  const clearAddress = () => {
+    if (address) {
+      setAddress(null);
+    }
+  };
+
   const formSubmit = event => {
     event.preventDefault();
     if (cep.length < 8) {
       alert("Digite um CEP válido!");
     } else {
       setQuery(cep);
-      setCep("");
     }
+    setCep("");
   };
 
   return (
@@ -52,6 +57,7 @@ const App = () => {
             value={cep}
             placeholder="00000-000"
             onChange={updateCep}
+            onKeyUp={clearAddress}
           />
           <button className="cep-form__button" type="submit">
             Buscar CEP
